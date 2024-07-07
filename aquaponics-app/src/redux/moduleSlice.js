@@ -13,7 +13,7 @@ export const fetchModules = createAsyncThunk(
 export const fetchModuleById = createAsyncThunk(
   "modules/fetchModuleById",
   async (id) => {
-    const response = await axios.get(`${API_URL}//modules/${id}`);
+    const response = await axios.get(`${API_URL}/modules/${id}`);
     return response.data;
   }
 );

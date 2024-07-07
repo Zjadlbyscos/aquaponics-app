@@ -10,6 +10,13 @@ export const fetchModules = createAsyncThunk(
     return response.data;
   }
 );
+export const fetchModuleById = createAsyncThunk(
+  "modules/fetchModuleById",
+  async (id) => {
+    const response = await axios.get(`${API_URL}//modules/${id}`);
+    return response.data;
+  }
+);
 
 const modulesSlice = createSlice({
   name: "modules",
@@ -29,6 +36,17 @@ const modulesSlice = createSlice({
         state.modules = action.payload;
       })
       .addCase(fetchModules.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(fetchModuleById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchModuleById.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.selectedModule = action.payload;
+      })
+      .addCase(fetchModuleById.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });

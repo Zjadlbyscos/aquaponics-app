@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+const API_URL = process.env.REACT_APP_API_URL 
+|| "http://localhost:3001";
 
 export const fetchModules = createAsyncThunk(
   "modules/fetchModules",
@@ -18,11 +19,19 @@ export const fetchModuleById = createAsyncThunk(
   }
 );
 
+export const updateModule = createAsyncThunk('modules/updateModule', async ({ id, updates }) => {
+  const response = await axios.patch(`${API_URL}/modules/${id}`, updates);
+  return response.data;
+});
+
 const modulesSlice = createSlice({
   name: "modules",
   initialState: {
     modules: [],
-    status: "idle",
+    selectedModule: null,
+    isLoading: false,
+    hasSucceeded: false,
+    hasFailed: false,
     error: null,
   },
   reducers: {},
@@ -57,8 +66,24 @@ const modulesSlice = createSlice({
       state.isLoading = false;
       state.hasFailed = true;
       state.error = action.error.message;
+    })
+    .addCase(updateModule.pending, (state) => {
+      state.isLoading = true;
+      state.hasSucceeded = false;
+      state.hasFailed = false;
+    })
+    .addCase(updateModule.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.hasSucceeded = true;
+      state.selectedModule = action.payload;
+    })
+    .addCase(updateModule.rejected, (state, action) => {
+      state.isLoading = false;
+      state.hasFailed = true;
+      state.error = action.error.message;
     });
 },
 });
+
 export const modulesReducer = modulesSlice.reducer;
 export default modulesSlice.reducer;

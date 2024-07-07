@@ -1,12 +1,15 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ModuleList from "./components/ModuleList";
 
-
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-   <p>test</p>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<ModuleList />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

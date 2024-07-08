@@ -31,7 +31,7 @@ const HistoricalDataChart = ({ moduleId }) => {
   useEffect(() => {
     if (start && stop && mode) {
       axios
-        .get(`http://localhost:3001/modules/${moduleId}/history`, {
+        .get(`/modules/${moduleId}/history`, {
           params: { start, stop, mode },
         })
         .then((response) => {

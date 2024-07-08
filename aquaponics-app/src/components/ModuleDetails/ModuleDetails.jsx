@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, NavLink } from 'react-router-dom';
-import { fetchModuleById,updateModule } from '../../redux/moduleSlice';
+import { fetchModuleById,updateModule, updateTemperature } from '../../redux/moduleSlice';
+import socket from '../../utils/socket';
 
 const ModuleDetails = () => {
   const { id } = useParams();
@@ -34,6 +35,23 @@ const ModuleDetails = () => {
     }
   }, [module]);
 
+  useEffect(() => {
+    socket.on('temperatureUpdate', (data) => {
+      console.log('Temperature update:', data);
+      if (data.id === id) {
+        dispatch(updateTemperature(data));
+      }
+    });
+
+    socket.on('connect_error', (err) => {
+      console.error('Connection Error: ', err.message);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [dispatch, id]);
+
   const handleEditClick = () => {
     setIsEditing(true);
   };
@@ -52,7 +70,7 @@ const ModuleDetails = () => {
       dispatch(updateModule({ id, updates: formData }));
       setIsEditing(false);
     } else {
-      alert('Please fill out all fields correctly.');
+      alert('Please ensure all fields are filled correctly.');
     }
   };
 
@@ -64,48 +82,23 @@ const ModuleDetails = () => {
     content = (
       <div>
         <h2>{module.name}</h2>
-        <p>{module.description}</p>
+        <p>Description: {module.description}</p>
         <p>Available: {module.available ? 'Yes' : 'No'}</p>
         <p>Target Temperature: {module.targetTemperature}°C</p>
-        {module.available ? (
-          <>
-            <button onClick={handleEditClick}>Edit Module</button>
-            {isEditing && (
-              <form onSubmit={handleFormSubmit}>
-                <label>
-                  Name:
-                  <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleFormChange}
-                  />
-                </label>
-                <label>
-                  Description:
-                  <input
-                    type="text"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleFormChange}
-                  />
-                </label>
-                <label>
-                  Target Temperature:
-                  <input
-                    type="number"
-                    name="targetTemperature"
-                    value={formData.targetTemperature}
-                    onChange={handleFormChange}
-                  />
-                </label>
-                <button type="submit">Save</button>
-              </form>
-            )}
-          </>
-        ) : (
-          <p>This module is not available for editing.</p>
-        )}
+        <p
+          style={{
+            color:
+              module.currentTemperature >= module.targetTemperature - 0.5 &&
+              module.currentTemperature <= module.targetTemperature + 0.5
+                ? 'green'
+                : 'red',
+          }}
+        >
+          Current Temperature: {module.currentTemperature !== undefined ? `${module.currentTemperature}°C` : 'N/A'}
+        </p>
+        <button onClick={handleEditClick} disabled={!module.available}>
+          Edit Module
+        </button>
         <NavLink to="/">Back to Module List</NavLink>
       </div>
     );
@@ -117,6 +110,30 @@ const ModuleDetails = () => {
     <div>
       <h1>Module Details</h1>
       {content}
+      {isEditing && (
+        <div className="modal">
+          <form onSubmit={handleFormSubmit}>
+            <label>
+              Name:
+              <input type="text" name="name" value={formData.name} onChange={handleFormChange} />
+            </label>
+            <label>
+              Description:
+              <input type="text" name="description" value={formData.description} onChange={handleFormChange} />
+            </label>
+            <label>
+              Target Temperature:
+              <input
+                type="number"
+                name="targetTemperature"
+                value={formData.targetTemperature}
+                onChange={handleFormChange}
+              />
+            </label>
+            <button type="submit">Save Changes</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

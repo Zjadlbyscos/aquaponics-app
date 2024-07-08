@@ -34,7 +34,17 @@ const modulesSlice = createSlice({
     hasFailed: false,
     error: null,
   },
-  reducers: {},
+  reducers: { updateTemperature(state, action) {
+    const { id, temperature } = action.payload;
+    const module = state.modules.find((mod) => mod.id === id);
+    if (module) {
+      module.currentTemperature = temperature;
+    }
+    if (state.selectedModule && state.selectedModule.id === id) {
+      state.selectedModule.currentTemperature = temperature;
+    }
+  },
+},
   extraReducers: (builder) => {
     builder
     .addCase(fetchModules.pending, (state) => {
@@ -84,6 +94,6 @@ const modulesSlice = createSlice({
     });
 },
 });
-
+export const { updateTemperature } = modulesSlice.actions;
 export const modulesReducer = modulesSlice.reducer;
 export default modulesSlice.reducer;

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ModuleList from "./components/ModuleList";
+import ModuleList from "./components/ModuleList/ModuleList";
 import ModuleDetails from "./components/ModuleDetails/ModuleDetails";
 
 const App = () => {

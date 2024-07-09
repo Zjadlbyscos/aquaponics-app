@@ -3,11 +3,12 @@ export const FooterWrapper = styled.div`
   display: flex;
   justify-content: center;
   background-color: var(--background-2);
-padding: 3vw 0;
+padding: 3vw ;
   a {
     color:var(--primary-color);
     position: relative;
     text-align: center;
+    padding: 0 3vw ;
 }
     a::before {
     content: "";

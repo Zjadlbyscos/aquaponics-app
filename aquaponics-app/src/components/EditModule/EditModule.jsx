@@ -33,39 +33,37 @@ const EditModuleDialog = ({ module, onClose }) => {
   };
 
   return (
- <>
-
+    <>
       <h2>Edit Module</h2>
       <EditDiv>
-      <label>
-        Name:
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </label>
-      <label>
-        Description:
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </label>
-      <label>
-        Target Temperature:
-        <input
-          type="number"
-          value={targetTemperature}
-          onChange={(e) => setTargetTemperature(e.target.value)}
-        />
-      </label>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        <label>
+          Name:
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <label>
+          Target Temperature:
+          <input
+            type="number"
+            value={targetTemperature}
+            onChange={(e) => setTargetTemperature(e.target.value)}
+          />
+        </label>
+        <label>
+          Description:
+          <textarea
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </label>
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </EditDiv>
       <button onClick={handleSave}>Save</button>
       <button onClick={onClose}>Cancel</button>
-  
     </>
   );
 };

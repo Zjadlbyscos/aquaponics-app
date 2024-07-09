@@ -4,6 +4,8 @@ import { fetchModules } from "../../redux/moduleSlice";
 import ModuleListItem from "./ModuleListItem";
 import socket from "../../utils/socket";
 
+import { Modulediv, ModuleElemet } from "./ModuleList.styled";
+
 const ModuleList = () => {
   const dispatch = useDispatch();
   const modules = useSelector((state) => state.modules.modules);
@@ -25,9 +27,9 @@ const ModuleList = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <Modulediv>
       <h1>Module List</h1>
-      <ul>
+      <ModuleElemet>
         {modules.map((module) => (
           <ModuleListItem
             key={module.id}
@@ -35,8 +37,8 @@ const ModuleList = () => {
             currentTemperature={currentTemperatures[module.id]}
           />
         ))}
-      </ul>
-    </div>
+      </ModuleElemet>
+    </Modulediv>
   );
 };
 

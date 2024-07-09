@@ -1,14 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ModuleList from "./components/ModuleList/ModuleList";
-import ModuleDetails from "./components/ModuleDetails/ModuleDetails";
-
+import { ModuleListPage } from "./pages/ModuleListPage";
+import { ModuleDetailPage } from "./pages/ModuleDetailPage";
+import { ShareedLayout } from "./components/SharedLayout/SharedLayout";
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<ModuleList />} />
-        <Route path="/modules/:id" element={<ModuleDetails />} />
+        <Route path="/" element={<ShareedLayout />}>
+          <Route path="/" element={<ModuleListPage />} />
+          <Route path="/modules/:id" element={<ModuleDetailPage />} />
+        </Route>
       </Routes>
     </Router>
   );

@@ -5,10 +5,11 @@ export const Modulediv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  max-width: 1200px;
+  margin: auto;
 `;
 export const ModuleElemet = styled.ul`
-display: flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -23,25 +24,19 @@ display: flex;
 
     &:hover,
     &:focus {
-
-        box-shadow: -1px 6px 39px 8px #006fa8;
+      box-shadow: -1px 3px 39px 8px #006fa8;
     }
-  a{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    a {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
-}
- 
-
 `;
 
 export const ListWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    max-width: 50%;
-  
-
- 
-`
+  display: flex;
+  flex-direction: column;
+  max-width: 50%;
+`;

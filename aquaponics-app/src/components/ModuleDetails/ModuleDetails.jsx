@@ -5,14 +5,16 @@ import { fetchModuleDetails } from "../../redux/moduleSlice";
 import EditModuleDialog from "../EditModule/EditModule";
 import HistoricalDataChart from "../HistoricData/HistoricalData";
 import socket from "../../utils/socket";
-
+import { ListWrapper } from "../ModuleList/ModuleList.styled";
 import { DetailDiv } from "./Module.Details.styled";
+import { WrapperDetail } from "./Module.Details.styled";
 const ModuleDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const module = useSelector((state) => state.modules.module);
   const [currentTemperature, setCurrentTemperature] = useState("N/A");
   const [showEditDialog, setShowEditDialog] = useState(false);
+
 
   useEffect(() => {
     dispatch(fetchModuleDetails(id));
@@ -34,8 +36,19 @@ const ModuleDetail = () => {
 
   return (
     <DetailDiv>
+
+  
+      <Link to="/">
+        <button>Back to List </button>{" "}
+      </Link>
+      <WrapperDetail>
+      <ListWrapper>
       <h1>{module.name}</h1>
-      <p>{module.description}</p>
+
+<p>{module.description}</p>
+
+      </ListWrapper>
+      <ListWrapper>
       <p>Available: {module.available ? "Yes" : "No"}</p>
       <p>Target Temperature: {module.targetTemperature}°C</p>
       <p
@@ -49,13 +62,15 @@ const ModuleDetail = () => {
       >
         Current Temperature: {currentTemperature}°C
       </p>
+
+      </ListWrapper>
+      </WrapperDetail>
       <button
         onClick={() => setShowEditDialog(true)}
         disabled={!module.available}
       >
         Edit Module
       </button>
-      <Link to="/">Back to List</Link>
 
       {showEditDialog && (
         <EditModuleDialog
@@ -64,6 +79,9 @@ const ModuleDetail = () => {
         />
       )}
       <HistoricalDataChart moduleId={id} />
+      <Link to="/">
+        <button>Back to List </button>{" "}
+      </Link>
     </DetailDiv>
   );
 };

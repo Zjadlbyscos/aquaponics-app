@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateModule } from "../../redux/moduleSlice";
+import { EditDiv } from "../ModuleDetails/Module.Details.styled";
 
 const EditModuleDialog = ({ module, onClose }) => {
   const [name, setName] = useState(module.name);
@@ -32,8 +33,10 @@ const EditModuleDialog = ({ module, onClose }) => {
   };
 
   return (
-    <div>
+ <>
+
       <h2>Edit Module</h2>
+      <EditDiv>
       <label>
         Name:
         <input
@@ -59,9 +62,11 @@ const EditModuleDialog = ({ module, onClose }) => {
         />
       </label>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      </EditDiv>
       <button onClick={handleSave}>Save</button>
       <button onClick={onClose}>Cancel</button>
-    </div>
+  
+    </>
   );
 };
 

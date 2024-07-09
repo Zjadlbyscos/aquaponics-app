@@ -28,7 +28,7 @@ const ModuleList = () => {
 
   return (
     <Modulediv>
-      <h1>Module List</h1>
+
       <ModuleElemet>
         {modules.map((module) => (
           <ModuleListItem

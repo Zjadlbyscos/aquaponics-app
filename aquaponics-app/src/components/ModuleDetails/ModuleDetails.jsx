@@ -15,7 +15,6 @@ const ModuleDetail = () => {
   const [currentTemperature, setCurrentTemperature] = useState("N/A");
   const [showEditDialog, setShowEditDialog] = useState(false);
 
-
   useEffect(() => {
     dispatch(fetchModuleDetails(id));
 
@@ -36,34 +35,30 @@ const ModuleDetail = () => {
 
   return (
     <DetailDiv>
-
-  
       <Link to="/">
         <button>Back to List </button>{" "}
       </Link>
       <WrapperDetail>
-      <ListWrapper>
-      <h1>{module.name}</h1>
+        <ListWrapper>
+          <h1>{module.name}</h1>
 
-<p>{module.description}</p>
-
-      </ListWrapper>
-      <ListWrapper>
-      <p>Available: {module.available ? "Yes" : "No"}</p>
-      <p>Target Temperature: {module.targetTemperature}°C</p>
-      <p
-        style={{
-          color:
-            currentTemperature >= module.targetTemperature - 0.5 &&
-            currentTemperature <= module.targetTemperature + 0.5
-              ? "green"
-              : "red",
-        }}
-      >
-        Current Temperature: {currentTemperature}°C
-      </p>
-
-      </ListWrapper>
+          <p>{module.description}</p>
+        </ListWrapper>
+        <ListWrapper>
+          <p>Available: {module.available ? "Yes" : "No"}</p>
+          <p>Target Temperature: {module.targetTemperature}°C</p>
+          <p
+            style={{
+              color:
+                currentTemperature >= module.targetTemperature - 0.5 &&
+                currentTemperature <= module.targetTemperature + 0.5
+                  ? "green"
+                  : "red",
+            }}
+          >
+            Current Temperature: {currentTemperature}°C
+          </p>
+        </ListWrapper>
       </WrapperDetail>
       <button
         onClick={() => setShowEditDialog(true)}

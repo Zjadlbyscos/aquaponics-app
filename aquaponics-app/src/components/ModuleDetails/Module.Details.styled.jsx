@@ -8,6 +8,8 @@ export const DetailDiv = styled.div`
   border-radius: 20px;
   box-shadow: -1px 3px 23px -14px rgba(0, 111, 168, 1);
   gap: 2vw;
+  max-width: 1200px;
+  margin: auto;
 `;
 export const WrapperDetail = styled.div`
   display: flex;
@@ -31,12 +33,12 @@ export const EditDiv = styled.div`
 
     input {
       max-width: 50%;
-      min-height:25px;
+      min-height: 25px;
       height: 3vw;
     }
     & textarea {
       width: 100%;
-      min-height:50px;
+      min-height: 50px;
       height: 10vw;
     }
   }

@@ -8,6 +8,9 @@ export const HeaderWrapper = styled.div`
     img{
         width:50px;
         @media (min-width: 768px) {
+            width:70px;
+    }
+    @media (min-width: 1024px) {
             width:80px;
     }
     }

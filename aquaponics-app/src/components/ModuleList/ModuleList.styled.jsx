@@ -8,7 +8,6 @@ export const Modulediv = styled.div`
 
 `;
 export const ModuleElemet = styled.ul`
-width: 80%;
 display: flex;
   flex-direction: column;
   justify-content: center;

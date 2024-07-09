@@ -4,7 +4,7 @@ export const DetailDiv = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--background-2);
-  padding: 2vw;
+  padding: 5vw;
   border-radius: 20px;
   box-shadow: -1px 3px 23px -14px rgba(0, 111, 168, 1);
   gap: 2vw;
@@ -25,18 +25,19 @@ export const EditDiv = styled.div`
   gap: 2vw;
 
   label {
-    /* max-width: 48%; */
     width: 100%;
     display: flex;
     flex-direction: column;
 
     input {
       max-width: 50%;
+      min-height:25px;
       height: 3vw;
     }
     & textarea {
       width: 100%;
-      min-height: 10vw;
+      min-height:50px;
+      height: 10vw;
     }
   }
 `;

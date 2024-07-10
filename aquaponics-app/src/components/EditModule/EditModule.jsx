@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateModule } from "../../redux/moduleSlice";
+import { updateModule } from "../../redux/thunks/module.thunk";
 import { EditDiv } from "../ModuleDetails/Module.Details.styled";
 
 const EditModuleDialog = ({ module, onClose }) => {

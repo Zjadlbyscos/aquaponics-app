@@ -5,7 +5,8 @@ export const Modulediv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1000px;
+  width: 100%;
   margin: auto;
   padding: 3vw 0;
 `;
@@ -15,6 +16,7 @@ export const ModuleElemet = styled.ul`
   justify-content: center;
   align-items: center;
   gap: 2vw;
+  width: 100%;
   li {
     background-color: var(--background-2);
     padding: 1vw;
@@ -30,7 +32,7 @@ export const ModuleElemet = styled.ul`
     a {
       display: flex;
       flex-direction: row;
-      /* justify-content: space-between; */
+ gap:5vw;
       align-items: center;
       width: 100%;
     }
@@ -40,7 +42,9 @@ export const ModuleElemet = styled.ul`
 export const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   max-width: 48%;
   width: 100%;
+
+
 `;

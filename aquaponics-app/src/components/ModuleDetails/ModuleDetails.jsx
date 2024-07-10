@@ -1,32 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchModuleDetails } from "../../redux/moduleSlice";
+import { fetchModuleDetails } from "../../redux/thunks/module.thunk";
+import { initializeSocket } from "../../redux/slices/temperatureSlice";
+
 import EditModuleDialog from "../EditModule/EditModule";
 import HistoricalDataChart from "../HistoricData/HistoricalData";
-import socket from "../../utils/socket";
+import CurrentTemperature from "../CurrentTemperature/CurrentTemperature";
+
 import { ListWrapper } from "../ModuleList/ModuleList.styled";
-import { DetailDiv } from "./Module.Details.styled";
-import { WrapperDetail } from "./Module.Details.styled";
+import { DetailDiv, WrapperDetail } from "./Module.Details.styled";
+
 const ModuleDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const module = useSelector((state) => state.modules.module);
-  const [currentTemperature, setCurrentTemperature] = useState("N/A");
   const [showEditDialog, setShowEditDialog] = useState(false);
 
   useEffect(() => {
     dispatch(fetchModuleDetails(id));
+    dispatch(initializeSocket());
 
-    socket.on("temperatureUpdate", (data) => {
-      if (data.id === id) {
-        setCurrentTemperature(data.temperature);
-      }
-    });
-
-    return () => {
-      socket.off("temperatureUpdate");
-    };
+    return () => {};
   }, [dispatch, id]);
 
   if (!module) {
@@ -36,27 +31,22 @@ const ModuleDetail = () => {
   return (
     <DetailDiv>
       <Link to="/">
-        <button>Back to List </button>{" "}
+        <button>Back to List</button>
       </Link>
       <WrapperDetail>
         <ListWrapper>
           <h1>{module.name}</h1>
-
           <p>{module.description}</p>
         </ListWrapper>
         <ListWrapper>
           <p>Available: {module.available ? "Yes" : "No"}</p>
           <p>Target Temperature: {module.targetTemperature}°C</p>
-          <p
-            style={{
-              color:
-                currentTemperature >= module.targetTemperature - 0.5 &&
-                currentTemperature <= module.targetTemperature + 0.5
-                  ? "green"
-                  : "red",
-            }}
-          >
-            Current Temperature: {currentTemperature}°C
+          <p>
+            Current Temperature:{" "}
+            <CurrentTemperature
+              moduleId={module.id}
+              targetTemperature={module.targetTemperature}
+            />
           </p>
         </ListWrapper>
       </WrapperDetail>
@@ -75,7 +65,7 @@ const ModuleDetail = () => {
       )}
       <HistoricalDataChart moduleId={id} />
       <Link to="/">
-        <button>Back to List </button>{" "}
+        <button>Back to List</button>
       </Link>
     </DetailDiv>
   );
